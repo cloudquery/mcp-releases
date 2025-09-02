@@ -26,16 +26,34 @@ xattr -d com.apple.quarantine /path/to/cq-platform-mcp
 
 **Option 2**: Go to System Preferences > Security & Privacy > General, and click "Allow Anyway" for the blocked app.
 
-### Required Environment Variables (can use .env)
+### Supported modes
 
-Either:
+The MCP server supports three modes:
 
-- `POSTGRES_CONNECTION_STRING` - "postgres://user:password@host:port/database"
+- `cli` - for getting started with CloudQuery CLI and generate configuration files using natural language
+- `postgres` - for CLI users syncing to a PostgreSQL destination, to query the data synced to the database using natural language
+- `platform` - for CloudQuery Platform customers to query the data synced to the platform using natural language
 
-Or:
+#### CLI Mode
 
-- `CQ_PLATFORM_API_URL` - "https://your-deployment.cloudquery.io/api"
+If no environment variables are set, the MCP server will default to CLI mode.
+
+#### PostgreSQL Mode
+
+Configure the following environment variables to enable PostgreSQL mode.
+
+- `POSTGRES_CONNECTION_STRING` - `postgres://user:password@host:port/database`
+
+> The MCP server supports reading `.env` files.
+
+#### Platform Mode
+
+Configure the following environment variables to enable Platform mode.
+
+- `CQ_PLATFORM_API_URL` - `https://your-deployment.cloudquery.io/api`
 - `CQ_PLATFORM_API_KEY` - Your CloudQuery Platform API key
+
+> The MCP server supports reading `.env` files.
 
 ### Optional Environment Variables
 
@@ -192,3 +210,14 @@ If you're using it against a PostgreSQL destination, e.g.:
 To see the new MCP server in the list, you might need to restart VSCode.
 
 > On first use, you will be prompted to enter the API key and API URL, or the PostgreSQL connection string.
+
+## Streamable HTTP Server
+
+The MCP server can also be run as a Streamable HTTP server, which allows you to connect to it remotely. To enable this,
+set the `HTTP_ADDRESS` environment variable to the desired address and port, e.g.:
+
+```bash
+export HTTP_ADDRESS=":8080"
+```
+
+The server will then listen for incoming HTTP requests under the path `/mcp` on the specified address and port.
