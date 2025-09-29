@@ -10,6 +10,19 @@ A Model Context Protocol (MCP) server that provides access to CloudQuery asset i
 
 ## Installation
 
+### From MCP Registry (Recommended)
+
+The CloudQuery MCP server is available through the official MCP Registry. This is the recommended way to install and use the server.
+
+**For Claude Desktop users:**
+1. Open Claude Desktop
+2. Go to Settings → MCP Servers
+3. Add a new server with the identifier: `io.github.cloudquery/mcp`
+4. Configure the appropriate environment variables for your use case (see configuration sections below)
+
+**For other MCP clients:**
+Use the server identifier `io.github.cloudquery/mcp` to install from the MCP Registry.
+
 ### Download Binary
 
 Download the latest binary for your platform from the [Releases page](https://github.com/cloudquery/mcp/releases).
