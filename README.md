@@ -57,6 +57,11 @@ Configure the following environment variables to enable PostgreSQL mode.
 
 - `POSTGRES_CONNECTION_STRING` - `postgres://user:password@host:port/database`
 
+##### Kerberos Authentication
+For Kerberos/GSSAPI authentication, include the appropriate parameters in the connection string:
+- `postgres://username@REALM.EXAMPLE.COM@host:port/database?krbsrvname=postgres`
+- `postgres://username@host:port/database?krbsrvname=postgres&gsslib=gssapi`
+
 > The MCP server supports reading `.env` files.
 
 #### Platform Mode
