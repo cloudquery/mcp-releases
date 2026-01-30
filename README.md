@@ -57,6 +57,8 @@ Configure the following environment variables to enable PostgreSQL mode.
 
 - `POSTGRES_CONNECTION_STRING` - `postgres://user:password@host:port/database`
 
+> **Note:** If no `search_path` is specified in the connection string, the MCP server automatically defaults to `public` schema. You can override this by explicitly setting `search_path` in your connection string (e.g., `postgres://user:password@host:port/database?search_path=myschema` or `host=localhost dbname=mydb search_path=myschema`).
+
 ##### Kerberos Authentication
 For Kerberos/GSSAPI authentication, include the appropriate parameters in the connection string:
 - `postgres://username@REALM.EXAMPLE.COM@host:port/database?krbsrvname=postgres`
