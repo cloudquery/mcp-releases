@@ -41,10 +41,11 @@ xattr -d com.apple.quarantine /path/to/cq-platform-mcp
 
 ### Supported modes
 
-The MCP server supports three modes:
+The MCP server supports four modes:
 
 - `cli` - for getting started with CloudQuery CLI and generate configuration files using natural language
 - `postgres` - for CLI users syncing to a PostgreSQL destination, to query the data synced to the database using natural language
+- `snowflake` - for CLI users syncing to a Snowflake destination, to query the data synced to the database using natural language
 - `platform` - for CloudQuery Platform customers to query the data synced to the platform using natural language
 
 #### CLI Mode
@@ -63,6 +64,21 @@ Configure the following environment variables to enable PostgreSQL mode.
 For Kerberos/GSSAPI authentication, include the appropriate parameters in the connection string:
 - `postgres://username@REALM.EXAMPLE.COM@host:port/database?krbsrvname=postgres`
 - `postgres://username@host:port/database?krbsrvname=postgres&gsslib=gssapi`
+
+> The MCP server supports reading `.env` files.
+
+#### Snowflake Mode
+
+Configure the following environment variables to enable Snowflake mode.
+
+- `SNOWFLAKE_CONNECTION_STRING` - Snowflake connection string in the format: `user:password@account/database/schema?warehouse=warehouse_name`
+
+Example connection strings:
+- `user:password@account/database/schema` - Basic authentication
+- `user:password@account/database/schema?warehouse=COMPUTE_WH` - With warehouse specified
+- `user:password@account.region/database/schema?warehouse=COMPUTE_WH` - With region
+
+For more connection string options, see the [Snowflake Go Driver documentation](https://pkg.go.dev/github.com/snowflakedb/gosnowflake).
 
 > The MCP server supports reading `.env` files.
 
@@ -118,6 +134,22 @@ If you're using it against a PostgreSQL destination, e.g.:
 }
 ```
 
+If you're using it against a Snowflake destination, e.g.:
+
+```json
+{
+  "mcpServers": {
+    "cloudquery": {
+      "command": "/absolute/path/to/cq-platform-mcp",
+      "args": [],
+      "env": {
+        "SNOWFLAKE_CONNECTION_STRING": "user:password@account/database/schema?warehouse=COMPUTE_WH"
+      }
+    }
+  }
+}
+```
+
 Notes: 
 
 - "command" must be an absolute path to your local cq-platform-mcp binary.
@@ -157,6 +189,22 @@ If you're using it against a PostgreSQL destination, e.g.:
       "args": [],
       "env": {
         "POSTGRES_CONNECTION_STRING": "postgres://user:password@localhost:5432/database?sslmode=disable"
+      }
+    }
+  }
+}
+```
+
+If you're using it against a Snowflake destination, e.g.:
+
+```json
+{
+  "mcpServers": {
+    "cloudquery": {
+      "command": "/path/to/mcp/binary",
+      "args": [],
+      "env": {
+        "SNOWFLAKE_CONNECTION_STRING": "user:password@account/database/schema?warehouse=COMPUTE_WH"
       }
     }
   }
@@ -221,6 +269,30 @@ If you're using it against a PostgreSQL destination, e.g.:
       "command":"/path/to/mcp/binary",
       "env":{
         "POSTGRES_CONNECTION_STRING": "${input:cloudquery-postgres-connection-string}"
+      }
+    }
+  }
+}
+```
+
+If you're using it against a Snowflake destination, e.g.:
+
+```json
+{
+  "inputs":[
+    {
+      "type":"promptString",
+      "id":"cloudquery-snowflake-connection-string",
+      "description":"CloudQuery Snowflake Connection String",
+      "password":true
+    }
+  ],
+  "servers":{
+    "CloudQuery":{
+      "type":"stdio",
+      "command":"/path/to/mcp/binary",
+      "env":{
+        "SNOWFLAKE_CONNECTION_STRING": "${input:cloudquery-snowflake-connection-string}"
       }
     }
   }
