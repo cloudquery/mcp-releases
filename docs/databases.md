@@ -8,7 +8,7 @@ Query data that the CloudQuery CLI synced to a PostgreSQL or Snowflake destinati
 
 You need:
 
-- The MCP server binary installed. See [Install](../README.md#install).
+- The MCP server installed. See [Install](../README.md#install).
 - At least one completed CloudQuery sync to PostgreSQL or Snowflake.
 - A connection string for that database (see Step 1).
 

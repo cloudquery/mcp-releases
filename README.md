@@ -10,9 +10,14 @@ A Model Context Protocol (MCP) server that lets AI assistants query your CloudQu
 | PostgreSQL or Snowflake, synced with the CloudQuery CLI | [Set up with PostgreSQL or Snowflake](docs/databases.md) |
 | No data yet; want help writing CLI configs | [Set up for the CloudQuery CLI](docs/cli.md) |
 
-Each guide covers credentials, client configuration, a quick check and troubleshooting. Install the binary first.
+Each guide covers credentials, client configuration, a quick check and troubleshooting. [Install](#install) the server first.
 
 ## Install
+
+### From the MCP Registry (recommended)
+
+The server is listed in the official MCP Registry as `io.github.cloudquery/mcp`. If your client installs from the registry, use that name, then set the variables from your guide.
+<!-- TODO: confirm which clients support registry install and add their steps. The previous "Claude Desktop → Settings → MCP Servers" steps don't match the current Claude Desktop UI. -->
 
 ### Download the binary
 
@@ -39,11 +44,6 @@ xattr -d com.apple.quarantine ~/bin/cq-platform-mcp
 ```
 
 Or open **System Settings → Privacy & Security** and click **Allow Anyway**.
-
-### From the MCP Registry
-
-The server is listed in the official MCP Registry as `io.github.cloudquery/mcp`. If your client installs from the registry, use that name, then set the variables from your guide.
-<!-- TODO: confirm which clients support registry install and add their steps. The previous "Claude Desktop → Settings → MCP Servers" steps don't match the current Claude Desktop UI. -->
 
 ### Upgrade
 

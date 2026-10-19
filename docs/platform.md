@@ -8,7 +8,7 @@ Query the asset inventory in your CloudQuery Platform deployment using natural l
 
 You need:
 
-- The MCP server binary installed. See [Install](../README.md#install).
+- The MCP server installed. See [Install](../README.md#install).
 - Your Platform API URL: your deployment URL followed by `/api`, for example `https://acme.cloudquery.io/api`.
 - A Platform API key that has not expired.
   <!-- TODO: add exact UI path to create an API key, required role/scope, and default expiry. -->
