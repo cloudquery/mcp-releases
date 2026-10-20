@@ -2,6 +2,8 @@
 
 Query the asset inventory in your CloudQuery Platform deployment using natural language.
 
+ℹ️ **Note**: You can enable Hosted MCP Server on CloudQuery Platform directly without the need to download and configure this binary. For more information, see [CloudQuery Hosted MCP Server Documentation](https://www.cloudquery.io/docs/platform/features/mcp-server#hosted-mcp-server).
+
 [← Back to README](../README.md)
 
 ## Before you start
@@ -11,7 +13,6 @@ You need:
 - The MCP server installed. See [Install](../README.md#install).
 - Your Platform API URL: your deployment URL followed by `/api`, for example `https://acme.cloudquery.io/api`.
 - A Platform API key that has not expired.
-  <!-- TODO: add exact UI path to create an API key, required role/scope, and default expiry. -->
 
 ## Step 1: Add the server to your client
 
@@ -88,8 +89,17 @@ Run **MCP: Open User Configuration** from the Command Palette and add the config
 ```json
 {
   "inputs": [
-    { "type": "promptString", "id": "cq-api-url", "description": "CloudQuery Platform API URL" },
-    { "type": "promptString", "id": "cq-api-key", "description": "CloudQuery Platform API key", "password": true }
+    {
+      "type": "promptString",
+      "id": "cq-api-url",
+      "description": "CloudQuery Platform API URL"
+    },
+    {
+      "type": "promptString",
+      "id": "cq-api-key",
+      "description": "CloudQuery Platform API key",
+      "password": true
+    }
   ],
   "servers": {
     "cloudquery": {
@@ -109,7 +119,6 @@ Restart VS Code if the server doesn't appear.
 </details>
 
 > Don't set `POSTGRES_CONNECTION_STRING` or `SNOWFLAKE_CONNECTION_STRING` for the same server entry.
-<!-- TODO: confirm which mode wins when several connection variables are set. -->
 
 ## Step 2: Check that it works
 
@@ -121,11 +130,11 @@ Restart VS Code if the server doesn't appear.
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| Server fails to start on macOS | Run `xattr -d com.apple.quarantine /path/to/cq-platform-mcp`. See [macOS](../README.md#macos-blocks-the-binary). |
-| `401` / unauthorized | The key has expired or belongs to another deployment. Create a new key for the deployment in `CQ_PLATFORM_API_URL`. |
-| `404` / connection errors | Check the URL ends with `/api` and has no trailing slash. |
-| Server isn't listed | Check `command` is an absolute path and the JSON is valid, then fully restart the client. |
+| Symptom                        | Fix                                                                                                                 |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Server fails to start on macOS | Run `xattr -d com.apple.quarantine /path/to/cq-platform-mcp`. See [macOS](../README.md#macos-blocks-the-binary).    |
+| `401` / unauthorized           | The key has expired or belongs to another deployment. Create a new key for the deployment in `CQ_PLATFORM_API_URL`. |
+| `404` / connection errors      | Check the URL ends with `/api` and has no trailing slash.                                                           |
+| Server isn't listed            | Check `command` is an absolute path and the JSON is valid, then fully restart the client.                           |
 
 For more detail, turn on debug logs with `CQAPI_LOG_LEVEL=debug`. See [Logs](../README.md#logs) for where clients write them.

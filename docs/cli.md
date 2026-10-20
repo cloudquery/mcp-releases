@@ -4,8 +4,6 @@ Get started with the CloudQuery CLI. Describe what you want to sync in plain lan
 
 [← Back to README](../README.md)
 
-<!-- TODO: confirm what CLI mode exposes (tools, prerequisites like an installed `cloudquery` CLI or login) and expand this page. -->
-
 ## Before you start
 
 You need the MCP server installed. See [Install](../README.md#install).

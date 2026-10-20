@@ -13,7 +13,6 @@ You need:
 - A connection string for that database (see Step 1).
 
 **Use a read-only database user.** The server runs queries that the AI writes. A read-only user keeps a bad query from changing your data.
-<!-- TODO: confirm whether the server enforces read-only queries itself. -->
 
 ## Step 1: Build your connection string
 
@@ -51,7 +50,6 @@ user:password@account/database/schema?warehouse=COMPUTE_WH
 - Set `warehouse` unless the user has a default warehouse.
 - URL-encode special characters in the password.
 - Other options, including key-pair authentication, are in the [Snowflake Go driver docs](https://pkg.go.dev/github.com/snowflakedb/gosnowflake/v2#hdr-Connection_String).
-  <!-- TODO: confirm key-pair / SSO auth works and add an example. -->
 
 ## Step 2: Add the server to your client
 
@@ -123,7 +121,12 @@ Run **MCP: Open User Configuration** from the Command Palette and add the config
 ```json
 {
   "inputs": [
-    { "type": "promptString", "id": "cq-db-conn", "description": "Database connection string", "password": true }
+    {
+      "type": "promptString",
+      "id": "cq-db-conn",
+      "description": "Database connection string",
+      "password": true
+    }
   ],
   "servers": {
     "cloudquery": {
@@ -151,13 +154,13 @@ Restart VS Code if the server doesn't appear.
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| Server fails to start on macOS | Run `xattr -d com.apple.quarantine /path/to/cq-platform-mcp`. See [macOS](../README.md#macos-blocks-the-binary). |
-| "No tables found" or wrong tables | Set `search_path` (PostgreSQL) or the schema in the path (Snowflake) to the schema your sync writes to. |
-| Authentication failed | URL-encode special characters in the password. |
-| SSL / TLS errors (PostgreSQL) | Match `sslmode` to the server: `require` for most cloud databases, `disable` only for local ones. |
-| Snowflake warehouse errors | Add `?warehouse=...`, or give the user a default warehouse. |
-| Server isn't listed | Check `command` is an absolute path and the JSON is valid, then fully restart the client. |
+| Symptom                           | Fix                                                                                                              |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Server fails to start on macOS    | Run `xattr -d com.apple.quarantine /path/to/cq-platform-mcp`. See [macOS](../README.md#macos-blocks-the-binary). |
+| "No tables found" or wrong tables | Set `search_path` (PostgreSQL) or the schema in the path (Snowflake) to the schema your sync writes to.          |
+| Authentication failed             | URL-encode special characters in the password.                                                                   |
+| SSL / TLS errors (PostgreSQL)     | Match `sslmode` to the server: `require` for most cloud databases, `disable` only for local ones.                |
+| Snowflake warehouse errors        | Add `?warehouse=...`, or give the user a default warehouse.                                                      |
+| Server isn't listed               | Check `command` is an absolute path and the JSON is valid, then fully restart the client.                        |
 
 For more detail, turn on debug logs with `CQAPI_LOG_LEVEL=debug`. See [Logs](../README.md#logs) for where clients write them.

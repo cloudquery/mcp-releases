@@ -4,11 +4,11 @@ A Model Context Protocol (MCP) server that lets AI assistants query your CloudQu
 
 ## Choose your setup
 
-| Where your data is | Guide |
-|---|---|
-| CloudQuery Platform | [Set up with CloudQuery Platform](docs/platform.md) |
+| Where your data is                                      | Guide                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------- |
 | PostgreSQL or Snowflake, synced with the CloudQuery CLI | [Set up with PostgreSQL or Snowflake](docs/databases.md) |
-| No data yet; want help writing CLI configs | [Set up for the CloudQuery CLI](docs/cli.md) |
+| CloudQuery Platform (Saas)                              | [Set up with CloudQuery Platform](docs/platform.md)      |
+| No data yet; want help writing CLI configs              | [Set up for the CloudQuery CLI](docs/cli.md)             |
 
 Each guide covers credentials, client configuration, a quick check and troubleshooting. [Install](#install) the server first.
 
@@ -17,7 +17,6 @@ Each guide covers credentials, client configuration, a quick check and troublesh
 ### From the MCP Registry (recommended)
 
 The server is listed in the official MCP Registry as `io.github.cloudquery/mcp`. If your client installs from the registry, use that name, then set the variables from your guide.
-<!-- TODO: confirm which clients support registry install and add their steps. The previous "Claude Desktop → Settings → MCP Servers" steps don't match the current Claude Desktop UI. -->
 
 ### Download the binary
 
@@ -55,23 +54,23 @@ Download the new release and replace the binary at the same path. Then restart y
 
 The server picks a mode from the variables you set:
 
-| Mode | Set | Guide |
-|---|---|---|
-| `platform` | `CQ_PLATFORM_API_URL`, `CQ_PLATFORM_API_KEY` | [platform.md](docs/platform.md) |
-| `postgres` | `POSTGRES_CONNECTION_STRING` | [databases.md](docs/databases.md) |
-| `snowflake` | `SNOWFLAKE_CONNECTION_STRING` | [databases.md](docs/databases.md) |
-| `cli` | None (default) | [cli.md](docs/cli.md) |
+| Mode        | Set                                          | Guide                             |
+| ----------- | -------------------------------------------- | --------------------------------- |
+| `platform`  | `CQ_PLATFORM_API_URL`, `CQ_PLATFORM_API_KEY` | [platform.md](docs/platform.md)   |
+| `postgres`  | `POSTGRES_CONNECTION_STRING`                 | [databases.md](docs/databases.md) |
+| `snowflake` | `SNOWFLAKE_CONNECTION_STRING`                | [databases.md](docs/databases.md) |
+| `cli`       | None (default)                               | [cli.md](docs/cli.md)             |
 
 Set variables for one mode only.
 
 ### Optional variables
 
-| Variable | Description | Default |
-|---|---|---|
-| `CQAPI_LOG_LEVEL` | `debug`, `info`, `warn` or `error` | `info` |
-| `LOG_PRETTY` | Pretty console logs | On when run in a terminal |
-| `LOG_COLOR` | Coloured logs | On when run in a terminal |
-| `HTTP_ADDRESS` | Run as a Streamable HTTP server, for example `:8080` | Off (stdio) |
+| Variable          | Description                                          | Default                   |
+| ----------------- | ---------------------------------------------------- | ------------------------- |
+| `CQAPI_LOG_LEVEL` | `debug`, `info`, `warn` or `error`                   | `info`                    |
+| `LOG_PRETTY`      | Pretty console logs                                  | On when run in a terminal |
+| `LOG_COLOR`       | Coloured logs                                        | On when run in a terminal |
+| `HTTP_ADDRESS`    | Run as a Streamable HTTP server, for example `:8080` | Off (stdio)               |
 
 The server also reads variables from a `.env` file in its working directory. MCP clients often start the server in a different directory, so set variables in the client config instead.
 
@@ -86,17 +85,16 @@ HTTP_ADDRESS=":8080" CQ_PLATFORM_API_URL=... CQ_PLATFORM_API_KEY=... ./cq-platfo
 The server listens at `/mcp`, for example `http://localhost:8080/mcp`.
 
 > **Security:** anyone who can reach this endpoint can query your data with the server's credentials. Bind it to `127.0.0.1` or put it behind an authenticating proxy. Don't expose it to the internet.
-<!-- TODO: confirm whether the HTTP server has any built-in auth. -->
 
 ### Logs
 
-| Client | Where to find MCP server logs |
-|---|---|
-| Claude Desktop (macOS) | `~/Library/Logs/Claude/mcp-server-cloudquery.log` |
-| Claude Desktop (Windows) | `%APPDATA%\Claude\logs\mcp-server-cloudquery.log` |
-| Claude Code | Run `claude --debug`, or `/mcp` to see status |
-| Cursor | **Output** panel → **MCP Logs** |
-| VS Code | **MCP: List Servers** → select server → **Show Output** |
+| Client                   | Where to find MCP server logs                           |
+| ------------------------ | ------------------------------------------------------- |
+| Claude Desktop (macOS)   | `~/Library/Logs/Claude/mcp-server-cloudquery.log`       |
+| Claude Desktop (Windows) | `%APPDATA%\Claude\logs\mcp-server-cloudquery.log`       |
+| Claude Code              | Run `claude --debug`, or `/mcp` to see status           |
+| Cursor                   | **Output** panel → **MCP Logs**                         |
+| VS Code                  | **MCP: List Servers** → select server → **Show Output** |
 
 ## License
 
