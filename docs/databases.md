@@ -29,14 +29,14 @@ postgres://user:password@host:5432/database?sslmode=require
   - `postgres://username@REALM.EXAMPLE.COM@host:5432/database?krbsrvname=postgres`
   - `postgres://username@host:5432/database?krbsrvname=postgres&gsslib=gssapi`
 
-Read-only user example:
+Read-only user example. Run it in the destination database, and replace `cq_sync` with the role your CloudQuery sync connects as:
 
 ```sql
 CREATE USER cq_mcp WITH PASSWORD '...';
 GRANT CONNECT ON DATABASE cloudquery TO cq_mcp;
 GRANT USAGE ON SCHEMA public TO cq_mcp;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO cq_mcp;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO cq_mcp;
+ALTER DEFAULT PRIVILEGES FOR ROLE cq_sync IN SCHEMA public GRANT SELECT ON TABLES TO cq_mcp;
 ```
 
 ### Snowflake
