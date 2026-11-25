@@ -154,6 +154,24 @@ Built-in tool names and their hosted equivalents:
 - `CQAPI_LOG_LEVEL` - Log level: debug, info, warn, error (default: `info`)
 - `LOG_PRETTY` - Enable pretty console logging (default: auto-detected based on TTY)
 - `LOG_COLOR` - Enable colored logging (default: auto-detected based on TTY)
+- `DO_NOT_TRACK` - Set to `1` to turn off anonymous usage telemetry (see [Telemetry](#telemetry))
+
+### Telemetry
+
+The MCP server sends anonymous usage events to CloudQuery, so we can count how many people use each mode. It is on by default, and the server logs one line at startup to say so.
+
+To turn it off, set `DO_NOT_TRACK=1`. The server then sends nothing and stores nothing.
+
+Events:
+
+- `mcp_session_started` - when a client connects.
+- `mcp_tool_called` - after each tool call: the tool name, whether it succeeded and how long it took.
+
+Every event also carries the mode (`cli`, `postgres`, `snowflake` or `platform`), the transport (`stdio` or `http`), the server version, the client name and version (for example `claude-ai`), and the operating system and CPU architecture. The PostHog Go library also adds its own name and version, the Go version, and the operating system version and distribution. Events set the IP address to `0.0.0.0`, so PostHog does not store yours.
+
+Events are linked by a random ID, created on first run and stored in `<user config dir>/cloudquery/mcp/install_id` (for example `~/Library/Application Support/cloudquery/mcp/install_id` on macOS or `~/.config/cloudquery/mcp/install_id` on Linux). Delete the file to get a new ID.
+
+The server never sends SQL, query results, tool arguments, connection strings, hostnames, API keys, emails, or user and team IDs.
 
 ## Claude Desktop Integration
 
